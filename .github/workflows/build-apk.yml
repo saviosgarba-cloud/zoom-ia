@@ -1,4 +1,4 @@
-name: Criar Zoom IA e APK
+name: Criar Zoom IA V2 e APK
 
 on:
   workflow_dispatch:
@@ -12,188 +12,393 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Criar codigo-fonte na primeira execucao
-        id: bootstrap
+      - name: Preparar codigo-fonte V2 uma vez
         shell: bash
-        env:
-          ZOOM_IA_PROJECT_BASE64: |
-            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
-            AABQSwMECgAAAAAAdVsfXQAAAAAAAAAAAAAAABgAHABhcHAvc3JjL21haW4vcmVzL3ZhbHVlcy9V
-            VAkAAy1llWotZZVqdXgLAAEEAAAAAATpAwAAUEsDBBQAAAAIAHVbH12uxdsLNwAAAEYAAAAjABwA
-            YXBwL3NyYy9tYWluL3Jlcy92YWx1ZXMvc3RyaW5ncy54bWxVVAkAAy1llWotZZVqdXgLAAEEAAAA
-            AATpAwAAsylKLc4vLUpOLbbjUgACm+KSosy8dIW8xNxUW6XEgoJ4EEvJLio/P1fB09FGHyJvx2Wj
-            j6QTAFBLAwQUAAAACAB1Wx9dGkJxWK8AAAAfAQAAIgAcAGFwcC9zcmMvbWFpbi9yZXMvdmFsdWVz
-            L3RoZW1lcy54bWxVVAkAAy1llWotZZVqdXgLAAEEAAAAAATpAwAAfZAxDsIwDEX3nqLKAZK9SivB
-            gIQELDCxWa2hkZK4il2V3p4SCmLC8/vvf9kmZBpTi1w+go9cCZHnWvUiQ2UMtz0GYA2xS+Q63VIw
-            mVBNUS5nWWaPZYSAtbosLOorUdhvVDlAwii1WqNVJs2bOYJgcuD1wd170SfatOIobiGt3ux2gmFV
-            fyQ3irKD4PysGobI1ryg/5nJxY6m3HQWkJFzjaQRf9PW5IFNYc33JU3xBFBLAwQUAAAACAB1Wx9d
-            51E6AUsBAADoAgAAIAAcAGFwcC9zcmMvbWFpbi9BbmRyb2lkTWFuaWZlc3QueG1sVVQJAAMtZZVq
-            LWWVanV4CwABBAAAAAAE6QMAAH2STW/CMAxA7/0VVe4k221CbVmHkIY0ekDdZZcpa12ISJMocRn8
-            +6VfjKmw3Gq/PtuJo8WpluERrBNaxeSRPpAQVKFLoXYxabCaPZFFEkQ1V6ICh6HHlZtzVVotypjs
-            Ec2cMVfsoeaODnFa6Jpxc2AWHBtiJAlCf6LGgZsZsLVwbc1wSM8VryEmo+AXoOssX22zVU5ClgS9
-            gxsjRcHRp7tAe0YPl1J/v/Di0JiYoG2ATBDJv0DG5Nmh9WP6Rs1nW30KusYYbdFtUd5zoR8cOtdZ
-            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
-            AAAAAQAAAKSBugcAAGFwcC9zcmMvbWFpbi9qYXZhL2NvbS96b29taWEvYXBwL01haW5BY3Rpdml0
-            eS5rdFVUBQADLWWVanV4CwABBAAAAAAE6QMAAFBLAQIeAwoAAAAAAHVbH10AAAAAAAAAAAAAAAAR
-            ABgAAAAAAAAAEADtRWsSAABhcHAvc3JjL21haW4vcmVzL1VUBQADLWWVanV4CwABBAAAAAAE6QMA
-            AFBLAQIeAwoAAAAAAHVbH10AAAAAAAAAAAAAAAAYABgAAAAAAAAAEADtRbYSAABhcHAvc3JjL21h
-            aW4vcmVzL3ZhbHVlcy9VVAUAAy1llWp1eAsAAQQAAAAABOkDAABQSwECHgMUAAAACAB1Wx9drsXb
-            CzcAAABGAAAAIwAYAAAAAAABAAAApIEIEwAAYXBwL3NyYy9tYWluL3Jlcy92YWx1ZXMvc3RyaW5n
-            cy54bWxVVAUAAy1llWp1eAsAAQQAAAAABOkDAABQSwECHgMUAAAACAB1Wx9dGkJxWK8AAAAfAQAA
-            IgAYAAAAAAABAAAApIGcEwAAYXBwL3NyYy9tYWluL3Jlcy92YWx1ZXMvdGhlbWVzLnhtbFVUBQAD
-            LWWVanV4CwABBAAAAAAE6QMAAFBLAQIeAxQAAAAIAHVbH13nUToBSwEAAOgCAAAgABgAAAAAAAEA
-            AACkgacUAABhcHAvc3JjL21haW4vQW5kcm9pZE1hbmlmZXN0LnhtbFVUBQADLWWVanV4CwABBAAA
-            AAAE6QMAAFBLAQIeAxQAAAAIAHVbH11wE4ZedAAAANkAAAAQABgAAAAAAAEAAACkgUwWAABidWls
-            ZC5ncmFkbGUua3RzVVQFAAMtZZVqdXgLAAEEAAAAAATpAwAAUEsBAh4DFAAAAAgAdVsfXUX83Xmu
-            AAAARgEAABMAGAAAAAAAAQAAAKSBChcAAHNldHRpbmdzLmdyYWRsZS5rdHNVVAUAAy1llWp1eAsA
-            AQQAAAAABOkDAABQSwECHgMKAAAAAAB1Wx9dOL8jvTsAAAA7AAAACgAYAAAAAAABAAAApIEFGAAA
-            LmdpdGlnbm9yZVVUBQADLWWVanV4CwABBAAAAAAE6QMAAFBLBQYAAAAAEwATAMoGAACEGAAAAAA=
         run: |
-          if [ -f settings.gradle.kts ]; then
-            echo "created=false" >> "$GITHUB_OUTPUT"
-            echo "O projeto ja existe; mantendo suas alteracoes."
-          else
-            echo "$ZOOM_IA_PROJECT_BASE64" | base64 --decode > /tmp/zoom-ia-project.zip
-            unzip -o /tmp/zoom-ia-project.zip -d .
-            echo "created=true" >> "$GITHUB_OUTPUT"
-            echo "Codigo-fonte criado."
+          if [ -f .zoomia-v2 ]; then
+            echo "Zoom IA V2 ja preparada; mantendo suas alteracoes."
+            exit 0
           fi
 
-      - name: Salvar codigo-fonte no repositorio
-        if: steps.bootstrap.outputs.created == 'true'
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Adicionar codigo-fonte da Zoom IA"
-          git push
+          rm -rf app
+          mkdir -p app/src/main/java/com/zoomia/app
+          mkdir -p app/src/main/res/values
+
+          cat > settings.gradle.kts <<'EOF'
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+
+          rootProject.name = "ZoomIA"
+          include(":app")
+          EOF
+
+          cat > build.gradle.kts <<'EOF'
+          plugins {
+              id("com.android.application") version "8.7.3" apply false
+          }
+          EOF
+
+          cat > gradle.properties <<'EOF'
+          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+          android.useAndroidX=true
+          EOF
+
+          cat > app/build.gradle.kts <<'EOF'
+          plugins {
+              id("com.android.application")
+          }
+
+          android {
+              namespace = "com.zoomia.app"
+              compileSdk = 35
+
+              defaultConfig {
+                  applicationId = "com.zoomia.app"
+                  minSdk = 26
+                  targetSdk = 35
+                  versionCode = 3
+                  versionName = "0.3.0"
+              }
+
+              compileOptions {
+                  sourceCompatibility = JavaVersion.VERSION_17
+                  targetCompatibility = JavaVersion.VERSION_17
+              }
+          }
+          EOF
+
+          cat > app/src/main/AndroidManifest.xml <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+              <uses-permission android:name="android.permission.INTERNET" />
+
+              <application
+                  android:allowBackup="true"
+                  android:label="@string/app_name"
+                  android:supportsRtl="true"
+                  android:theme="@style/Theme.ZoomIA"
+                  android:usesCleartextTraffic="true">
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+                  </activity>
+              </application>
+          </manifest>
+          EOF
+
+          cat > app/src/main/res/values/strings.xml <<'EOF'
+          <resources>
+              <string name="app_name">Zoom IA</string>
+          </resources>
+          EOF
+
+          cat > app/src/main/res/values/themes.xml <<'EOF'
+          <resources>
+              <style name="Theme.ZoomIA" parent="android:style/Theme.Material.Light.NoActionBar">
+                  <item name="android:fontFamily">sans</item>
+                  <item name="android:windowLightStatusBar">true</item>
+                  <item name="android:colorAccent">#6750A4</item>
+              </style>
+          </resources>
+          EOF
+
+          cat > app/src/main/java/com/zoomia/app/MainActivity.java <<'EOF'
+          package com.zoomia.app;
+
+          import android.app.Activity;
+          import android.content.Context;
+          import android.content.SharedPreferences;
+          import android.os.Bundle;
+          import android.text.InputType;
+          import android.view.View;
+          import android.widget.Button;
+          import android.widget.EditText;
+          import android.widget.LinearLayout;
+          import android.widget.ScrollView;
+          import android.widget.TextView;
+          import android.widget.Toast;
+
+          import org.json.JSONArray;
+          import org.json.JSONObject;
+
+          import java.io.BufferedReader;
+          import java.io.InputStream;
+          import java.io.InputStreamReader;
+          import java.io.OutputStream;
+          import java.net.HttpURLConnection;
+          import java.net.URL;
+          import java.nio.charset.StandardCharsets;
+          import java.util.concurrent.ExecutorService;
+          import java.util.concurrent.Executors;
+
+          public class MainActivity extends Activity {
+              private EditText endpointInput;
+              private EditText modelInput;
+              private EditText keyInput;
+              private EditText promptInput;
+              private TextView conversation;
+              private Button sendButton;
+              private SharedPreferences prefs;
+              private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
+              @Override
+              protected void onCreate(Bundle savedInstanceState) {
+                  super.onCreate(savedInstanceState);
+                  prefs = getSharedPreferences("zoom_ia_settings", Context.MODE_PRIVATE);
+                  setContentView(createUi());
+              }
+
+              private View createUi() {
+                  ScrollView scroll = new ScrollView(this);
+                  LinearLayout root = new LinearLayout(this);
+                  root.setOrientation(LinearLayout.VERTICAL);
+                  root.setPadding(32, 32, 32, 48);
+                  scroll.addView(root);
+
+                  TextView title = new TextView(this);
+                  title.setText("Zoom IA");
+                  title.setTextSize(30f);
+                  root.addView(title);
+
+                  TextView subtitle = new TextView(this);
+                  subtitle.setText("Sua IA Android editavel");
+                  subtitle.setTextSize(16f);
+                  root.addView(subtitle);
+
+                  addSpace(root, 20);
+                  addSection(root, "Configuracao da IA");
+
+                  endpointInput = addInput(root, "Endpoint completo, ex.: https://seu-servidor/v1/chat/completions");
+                  endpointInput.setText(prefs.getString("endpoint", ""));
+
+                  modelInput = addInput(root, "Modelo");
+                  modelInput.setText(prefs.getString("model", ""));
+
+                  keyInput = addInput(root, "Chave da API (opcional)");
+                  keyInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                  keyInput.setText(prefs.getString("api_key", ""));
+
+                  Button save = new Button(this);
+                  save.setText("Salvar configuracao");
+                  save.setOnClickListener(v -> {
+                      prefs.edit()
+                              .putString("endpoint", endpointInput.getText().toString().trim())
+                              .putString("model", modelInput.getText().toString().trim())
+                              .putString("api_key", keyInput.getText().toString().trim())
+                              .apply();
+                      Toast.makeText(this, "Configuracao salva", Toast.LENGTH_SHORT).show();
+                  });
+                  root.addView(save);
+
+                  addSpace(root, 20);
+                  addSection(root, "Ferramentas");
+                  addTool(root, "Chat IA", "Conecta a uma API compativel com /v1/chat/completions.");
+                  addTool(root, "Gerar imagem", "Pronto para conectar a um gerador de imagens.");
+                  addTool(root, "Remover objeto", "Pronto para conectar a inpainting e mascara.");
+                  addTool(root, "Trocar/adicionar roupa", "Pronto para conectar a virtual try-on.");
+                  addTool(root, "Editar video", "Pronto para conectar a um modelo de video.");
+
+                  addSpace(root, 20);
+                  addSection(root, "Conversa");
+                  conversation = new TextView(this);
+                  conversation.setText("Configure sua API acima e envie uma mensagem.\n");
+                  conversation.setTextSize(16f);
+                  root.addView(conversation);
+
+                  promptInput = addInput(root, "Digite um pedido para sua IA");
+                  promptInput.setMinLines(2);
+
+                  sendButton = new Button(this);
+                  sendButton.setText("Enviar");
+                  sendButton.setOnClickListener(v -> sendMessage());
+                  root.addView(sendButton);
+
+                  return scroll;
+              }
+
+              private void sendMessage() {
+                  String endpoint = endpointInput.getText().toString().trim();
+                  String model = modelInput.getText().toString().trim();
+                  String key = keyInput.getText().toString().trim();
+                  String prompt = promptInput.getText().toString().trim();
+
+                  if (prompt.isEmpty()) return;
+                  conversation.append("\nVoce: " + prompt + "\n");
+                  promptInput.setText("");
+
+                  if (endpoint.isEmpty() || model.isEmpty()) {
+                      conversation.append("Zoom IA: preencha o endpoint e o modelo primeiro.\n");
+                      return;
+                  }
+
+                  sendButton.setEnabled(false);
+                  sendButton.setText("Enviando...");
+
+                  executor.execute(() -> {
+                      String answer = callChatApi(endpoint, model, key, prompt);
+                      runOnUiThread(() -> {
+                          conversation.append("Zoom IA: " + answer + "\n");
+                          sendButton.setEnabled(true);
+                          sendButton.setText("Enviar");
+                      });
+                  });
+              }
+
+              private String callChatApi(String endpoint, String model, String key, String prompt) {
+                  HttpURLConnection connection = null;
+                  try {
+                      connection = (HttpURLConnection) new URL(endpoint).openConnection();
+                      connection.setRequestMethod("POST");
+                      connection.setConnectTimeout(30000);
+                      connection.setReadTimeout(60000);
+                      connection.setDoOutput(true);
+                      connection.setRequestProperty("Content-Type", "application/json");
+                      if (!key.isEmpty()) {
+                          connection.setRequestProperty("Authorization", "Bearer " + key);
+                      }
+
+                      JSONObject message = new JSONObject();
+                      message.put("role", "user");
+                      message.put("content", prompt);
+
+                      JSONArray messages = new JSONArray();
+                      messages.put(message);
+
+                      JSONObject payload = new JSONObject();
+                      payload.put("model", model);
+                      payload.put("messages", messages);
+
+                      byte[] data = payload.toString().getBytes(StandardCharsets.UTF_8);
+                      try (OutputStream os = connection.getOutputStream()) {
+                          os.write(data);
+                      }
+
+                      int code = connection.getResponseCode();
+                      InputStream stream = code >= 200 && code < 300
+                              ? connection.getInputStream()
+                              : connection.getErrorStream();
+                      String body = readAll(stream);
+
+                      if (code < 200 || code >= 300) {
+                          return "Erro HTTP " + code + ": " + trim(body, 500);
+                      }
+
+                      JSONObject root = new JSONObject(body);
+                      JSONArray choices = root.optJSONArray("choices");
+                      if (choices == null || choices.length() == 0) {
+                          return "A API respondeu, mas nao retornou choices[0].message.content.";
+                      }
+                      JSONObject messageObject = choices.optJSONObject(0).optJSONObject("message");
+                      if (messageObject == null) {
+                          return "Resposta recebida, mas sem o campo message.";
+                      }
+                      String content = messageObject.optString("content", "").trim();
+                      return content.isEmpty() ? "Resposta vazia da API." : content;
+                  } catch (Exception e) {
+                      return "Falha ao conectar: " + (e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage());
+                  } finally {
+                      if (connection != null) connection.disconnect();
+                  }
+              }
+
+              private String readAll(InputStream stream) throws Exception {
+                  if (stream == null) return "";
+                  StringBuilder sb = new StringBuilder();
+                  try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
+                      String line;
+                      while ((line = reader.readLine()) != null) sb.append(line);
+                  }
+                  return sb.toString();
+              }
+
+              private String trim(String value, int max) {
+                  if (value == null) return "";
+                  return value.length() <= max ? value : value.substring(0, max);
+              }
+
+              private EditText addInput(LinearLayout root, String hint) {
+                  EditText input = new EditText(this);
+                  input.setHint(hint);
+                  input.setSingleLine(false);
+                  root.addView(input, new LinearLayout.LayoutParams(
+                          LinearLayout.LayoutParams.MATCH_PARENT,
+                          LinearLayout.LayoutParams.WRAP_CONTENT));
+                  return input;
+              }
+
+              private void addSection(LinearLayout root, String text) {
+                  TextView view = new TextView(this);
+                  view.setText(text);
+                  view.setTextSize(21f);
+                  root.addView(view);
+              }
+
+              private void addTool(LinearLayout root, String name, String description) {
+                  TextView view = new TextView(this);
+                  view.setText("\n" + name + "\n" + description);
+                  view.setTextSize(16f);
+                  view.setPadding(12, 10, 12, 10);
+                  root.addView(view);
+              }
+
+              private void addSpace(LinearLayout root, int height) {
+                  View space = new View(this);
+                  root.addView(space, new LinearLayout.LayoutParams(1, height));
+              }
+
+              @Override
+              protected void onDestroy() {
+                  super.onDestroy();
+                  executor.shutdownNow();
+              }
+          }
+          EOF
+
+          touch .zoomia-v2
 
       - name: Configurar Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: '17'
 
       - name: Configurar Gradle 8.9
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
         with:
-          gradle-version: 8.9
+          gradle-version: '8.9'
 
       - name: Compilar APK
-        run: gradle --no-daemon clean assembleDebug --stacktrace
+        run: gradle --no-daemon clean assembleDebug
+
+      - name: Salvar codigo V2 no repositorio
+        shell: bash
+        run: |
+          if git status --porcelain | grep -q .; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "Corrigir Zoom IA V2 e gerar APK"
+            git push
+          fi
 
       - name: Preparar APK
         run: |
