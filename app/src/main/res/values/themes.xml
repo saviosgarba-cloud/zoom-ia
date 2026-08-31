@@ -1,6 +1,7 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <style name="Theme.ZoomIA" parent="android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:colorAccent">#6750A4</item>
     </style>
 </resources>
